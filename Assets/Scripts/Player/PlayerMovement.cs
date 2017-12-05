@@ -36,8 +36,8 @@ public class PlayerMovement : MonoBehaviour
     public float turnAroundCD;
     float turnCD = 0;
 
-    float maxX;
-    float maxY;
+    public float maxX;
+    public float maxY;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -145,6 +145,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (aiming == true)
         {
+            //float initialX = spawnPoint.transform.rotation.x;
+            //float initialY = spawnPoint.transform.rotation.y;
             lr.SetPosition(0, spawnPoint.transform.position);
             lr.SetPosition(1, spawnPoint.transform.position + spawnPoint.transform.forward * linerendererDistance);
             //aiming
@@ -152,8 +154,8 @@ public class PlayerMovement : MonoBehaviour
             yRotation += Input.GetAxis("Mouse X") * 3;
             xRotation -= Input.GetAxis("Mouse Y") * 3;
 
-            //xRotation = Mathf.Clamp(xRotation, -maxX, maxX);
-            //yRotation = Mathf.Clamp(yRotation, -maxY, maxY);
+            //xRotation = Mathf.Clamp(xRotation, initialX + -maxX, initialX + maxX);
+            //yRotation = Mathf.Clamp(yRotation, initialY + -maxY, initialY + maxY);
 
             currentXRotation = Mathf.SmoothDamp(currentXRotation, xRotation, ref xRotationV, 0.02f);
             currentYRotation = Mathf.SmoothDamp(currentYRotation, yRotation, ref yRotationV, 0.02f);

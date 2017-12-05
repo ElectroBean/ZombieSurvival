@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ZombieScript : MonoBehaviour {
+public class ZombieScript : MonoBehaviour
+{
 
     public NavMeshAgent navMesh;
     public Animator anim;
@@ -20,16 +21,18 @@ public class ZombieScript : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
 
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         anim.SetBool("Moving", moving);
         anim.SetBool("Attacking", attacking);
         anim.SetBool("Dead", isDead);
-        if(navMesh.velocity.magnitude != 0)
+        if (navMesh.velocity.magnitude != 0)
         {
             moving = true;
         }
@@ -37,25 +40,29 @@ public class ZombieScript : MonoBehaviour {
         {
             moving = false;
         }
-	}
+    }
 
     private void OnTriggerStay(Collider other)
     {
-        if(other.tag == "Player")
+        if (Vector3.Distance(transform.position, other.gameObject.transform.position) > 5.0f)
         {
-            navMesh.SetDestination(other.transform.position);
+            if (other.tag == "Player")
+            {
+                navMesh.SetDestination(other.transform.position);
+            }
+
         }
     }
 
     public void Die()
     {
-        foreach(Collider col in gameObject.GetComponents<Collider>())
+        foreach (Collider col in gameObject.GetComponents<Collider>())
         {
             col.enabled = false;
         }
         navMesh.enabled = false;
         //rb.isKinematic = true;
-        
+
         isDead = true;
     }
 }
